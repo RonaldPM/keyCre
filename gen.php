@@ -32,21 +32,39 @@
                           i.e The number of letters in each
                           random string block seperated by '-'
     */
+    $full_key = "";
     for($nbc=0; $nbc<$no_of_blocks; $nbc++){
-      echo genRand($key_block_count);
+      $full_key .= genRand($key_block_count);
       if($nbc<$no_of_blocks-1){
-        echo "-";
+        $full_key.="-";
       }
     }
+    return $full_key;
   }
 
+  //DB connection code
+  include_once("conf/db_conn.php");
   //Get key specifications from the input form
   $nb = $_GET['nb'];
   $kbs = $_GET['kbs'];
   $nk = $_GET['nk'];
+  //Calculate length of the key
+  $key_length = ($nb*$kbs)+($nb-1);
   //Generate nk number of keys
   for($nkc=0; $nkc<$nk; $nkc++){
-    genKey($nb,$kbs);
+    //Print the key
+    $generated_key = genKey($nb,$kbs);
+    $key_slice = substr($generated_key, $key_length-$kbs, $key_length);
+    echo $generated_key;
     echo "<br />";
+    //Generating the hash of the key
+    $options = [
+        'cost' => 11
+    ];
+    $hashed_key = password_hash($generated_key, PASSWORD_BCRYPT, $options);
+    //Save the hash of the key to the DB
+    $sql =$conn->prepare('INSERT INTO keybase (key_hash, key_slice) values(?,?)');
+    $sql->bind_param('ss', $hashed_key, $key_slice);
+    $sql->execute();
   }
 ?>
