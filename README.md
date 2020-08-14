@@ -6,3 +6,5 @@ Create, store and manage lisence keys for your product with this web based appli
 - Copy the rest of the files to your servers htdocs or www directory  
 - Change the database credentials in the `keyCre/conf/db_conn.php` file according to your requirements  
 - Done.  
+
+An API call can be made to check the validity of the key entered by the user.
