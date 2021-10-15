@@ -1,6 +1,6 @@
 <?php
-  //Recieve the key. Change to a POST request for security.
-  $key = $_GET['key'];
+  //Recieve the key
+  $key = $_POST['key'];
   //Check if key is empty or not
   if(!empty($key)){
     include_once("conf/db_conn.php");
