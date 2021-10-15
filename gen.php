@@ -44,11 +44,8 @@
 
   //DB connection code
   include_once("conf/db_conn.php");
+  
   //Get key specifications from the input form
-  // $nb = $_GET['blockCount'];
-  // $kbs = $_GET['blockSize'];
-  // $nk = $_GET['keyCount'];
-
   $blockCount = $_GET['blockCount'];
   $blockSize = $_GET['blockSize'];
   $keyCount = $_GET['keyCount'];
