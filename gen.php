@@ -45,16 +45,21 @@
   //DB connection code
   include_once("conf/db_conn.php");
   //Get key specifications from the input form
-  $nb = $_GET['nb'];
-  $kbs = $_GET['kbs'];
-  $nk = $_GET['nk'];
+  // $nb = $_GET['blockCount'];
+  // $kbs = $_GET['blockSize'];
+  // $nk = $_GET['keyCount'];
+
+  $blockCount = $_GET['blockCount'];
+  $blockSize = $_GET['blockSize'];
+  $keyCount = $_GET['keyCount'];
+
   //Calculate length of the key
-  $key_length = ($nb*$kbs)+($nb-1);
+  $key_length = ($blockCount*$blockSize)+($blockCount-1);
   //Generate nk number of keys
-  for($nkc=0; $nkc<$nk; $nkc++){
+  for($nkc=0; $nkc<$keyCount; $nkc++){
     //Print the key
-    $generated_key = genKey($nb,$kbs);
-    $key_slice = substr($generated_key, $key_length-$kbs, $key_length);
+    $generated_key = genKey($blockCount,$blockSize);
+    $key_slice = substr($generated_key, $key_length-$blockSize, $key_length);
     echo $generated_key;
     echo "<br />";
     //Generating the hash of the key
